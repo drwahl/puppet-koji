@@ -1,0 +1,17 @@
+{
+  "name": "drwahl-koji",
+  "version": "0.1.0",
+  "author": "drwahl",
+  "summary": "Install and configure koji, and RPM build system",
+  "license": "Apache 2.0",
+  "source": "https://github.com/drwahl/puppet-koji.git",
+  "project_page": "https://github.com/drwahl/puppet-koji",
+  "issues_url": "https://github.com/drwahl/puppet-koji/issues",
+  "dependencies": [
+    {
+      "name": "puppetlabs-stdlib",
+      "version_range": ">= 1.0.0"
+    }
+  ]
+}
+
