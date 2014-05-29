@@ -1,0 +1,173 @@
+### THIS FILE IS MANAGED BY PUPPET
+### <%= file.split(File::SEPARATOR)[5..-1].join(File::SEPARATOR) %>
+[hub]
+
+## ConfigParser style config file, similar to ini files
+## http://docs.python.org/library/configparser.html
+##
+## Note that multiline values can be set by indenting subsequent lines
+## (which means you should not indent regular lines)
+
+## Basic options ##
+DBName = <%= @dbname %>
+DBUser = <%= @dbuser %>
+<% if @dbhost -%>
+DBHost = <%= @dbhost %>
+<% else -%>
+#DBHost = db.example.com
+<% end -%>
+<% if @dbpass -%>
+DBPass = <%= @dbpass %>
+<% else -%>
+#DBPass = example_password
+<% end -%>
+KojiDir = <%= @kojidir %>
+
+
+##  Kerberos authentication options  ##
+
+<% if @authprincipal -%>
+AuthPrincipal = <%= @authprincipal %>
+<% else -%>
+# AuthPrincipal = host/kojihub@EXAMPLE.COM
+<% end -%>
+<% if @authkeytab -%>
+AuthKeytab = <%= @authkeytab %>
+<% else -%>
+# AuthKeytab = /etc/koji.keytab
+<% end -%>
+<% if @proxyprincipals -%>
+ProxyPrincipals = <%= @proxyprincipals %>
+<% else -%>
+# ProxyPrincipals = koji/kojiweb@EXAMPLE.COM
+<% end -%>
+## format string for host principals (%s = hostname)
+<% if @hostprincipalformat -%>
+HostPrincipalFormat = <%= @hostprincipalformat %>
+<% else -%>
+# HostPrincipalFormat = compile/%s@EXAMPLE.COM
+<% end -%>
+
+## end Kerberos auth configuration
+
+
+##  SSL client certificate auth configuration  ##
+#note: ssl auth may also require editing the httpd config (conf.d/kojihub.conf)
+
+## the client username is the common name of the subject of their client certificate
+<% if @dnusernamecomponent -%>
+DNUsernameComponent = <%= @dnusernamecomponent %>
+<% else -%>
+# DNUsernameComponent = CN
+<% end -%>
+## separate multiple DNs with |
+<% if @proxydn -%>
+ProxyDNs = <%= @proxydn %>
+<% else -%>
+# ProxyDNs = /C=US/ST=Massachusetts/O=Example Org/OU=Example User/CN=example/emailAddress=example@example.com
+<% end -%>
+
+## end SSL client certificate auth configuration
+
+
+##  Other options  ##
+<% if @logincreateuser -%>
+LoginCreatesUser = <%= @logincreateuser %>
+<% else -%>
+#LoginCreatesUser = On
+<% end -%>
+<% if @kojiweburl -%>
+KojiWebURL = <%= @kojiweburl %>
+<% else -%>
+#KojiWebURL = http://kojiweb.example.com/koji
+<% end -%>
+# The domain name that will be appended to Koji usernames
+# when creating email notifications
+<% if @emaildomain -%>
+EmailDomain = <%= @emaildomain %>
+<% else -%>
+#EmailDomain = example.com
+<% end -%>
+# whether to send the task owner and package owner email or not on success.  this still goes to watchers
+<% if @notifyonsuccess -%>
+NotifyOnSuccess = <%= @notifyonsuccess %>
+<% else -%>
+#NotifyOnSuccess = True
+<% end -%>
+## Disables all notifications
+<% if @disablenotifications -%>
+DisableNotifications = <%= @disablenotifications %>
+<% else -%>
+# DisableNotifications = False
+<% end -%>
+
+## Extended features
+## Support Maven builds
+<% if @enablemaven -%>
+EnableMaven = <%= @enablemaven %>
+<% else -%>
+# EnableMaven = False
+<% end -%>
+## Support Windows builds
+<% if @enablewin -%>
+EnableWin = <%= @enablewin %>
+<% else -%>
+# EnableWin = False
+<% end -%>
+
+## Koji hub plugins
+## The path where plugins are found
+<% if @pluginpath -%>
+PluginPath = <%= @pluginpath %>
+<% else -%>
+# PluginPath = /usr/lib/koji-hub-plugins
+<% end -%>
+## A space-separated list of plugins to load
+<% if @plugins -%>
+Plugins = <%= @plugins %>
+<% else -%>
+# Plugins = echo
+<% end -%>
+
+## If KojiDebug is on, the hub will be /very/ verbose and will report exception
+## details to clients for anticipated errors (i.e. koji's own exceptions --
+## subclasses of koji.GenericError).
+<% if @kojidebug -%>
+KojiDebug = <%= @kojidebug %>
+<% else -%>
+# KojiDebug = On
+<% end -%>
+
+## Determines how much detail about exceptions is reported to the client (via faults)
+## Meaningful values:
+##   normal - a basic traceback (format_exception)
+##   extended - an extended traceback (format_exc_plus)
+##   anything else - no traceback, just the error message
+## The extended traceback is intended for debugging only and should NOT be
+## used in production, since it may contain sensitive information.
+<% if @kojitraceback -%>
+KojiTraceback = <%= @kojitraceback %>
+<% else -%>
+# KojiTraceback = normal
+<% end -%>
+
+## These options are intended for planned outages
+<% if @serveroffline -%>
+ServerOffline = <%= @serveroffline %>
+<% else -%>
+# ServerOffline = False
+<% end -%>
+<% if @offlinemessage -%>
+OfflineMessage = <%= @offlinemessage %>
+<% else -%>
+# OfflineMessage = temporary outage
+<% end -%>
+<% if @lockout -%>
+LockOut = <%= @lockout %>
+<% else -%>
+# LockOut = False
+<% end -%>
+## If ServerOffline is True, the server will always report a ServerOffline fault (with
+## OfflineMessage as the fault string).
+## If LockOut is True, the server will report a ServerOffline fault for all non-admin
+## requests.

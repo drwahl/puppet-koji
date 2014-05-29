@@ -1,0 +1,58 @@
+### THIS FILE IS MANAGED BY PUPPET
+### <%= file.split(File::SEPARATOR)[5..-1].join(File::SEPARATOR) %>
+#
+# koji-hub is an xmlrpc interface to the Koji database
+#
+
+Alias /kojihub "/usr/share/koji-hub/XMLRPC"
+
+SSLCertificateFile /etc/pki/koji/certs/kojihub.crt
+SSLCertificateKeyFile /etc/pki/koji/certs/kojihub.key
+SSLCertificateChainFile /etc/pki/koji/koji_ca_cert.crt
+SSLCACertificateFile /etc/pki/koji/koji_ca_cert.crt
+SSLVerifyClient require
+SSLVerifyDepth 10
+
+Listen 443
+
+<VirtualHost _default_:443>
+
+ErrorLog logs/ssl_error_log
+TransferLog logs/ssl_access_log
+LogLevel warn
+SSLEngine on
+SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+SSLVerifyClient require
+SSLVerifyDepth  10
+
+<Files ~ "\.(cgi|shtml|phtml|php3?)$">
+    SSLOptions +StdEnvVars
+</Files>
+<Directory "/var/www/cgi-bin">
+    SSLOptions +StdEnvVars
+</Directory>
+
+SetEnvIf User-Agent ".*MSIE.*" \
+         nokeepalive ssl-unclean-shutdown \
+         downgrade-1.0 force-response-1.0
+
+CustomLog logs/ssl_request_log \
+          "%t %h %{SSL_PROTOCOL}x %{SSL_CIPHER}x \"%r\" %b"
+
+</VirtualHost>       
+
+<Directory /usr/share/koji-hub>
+        SetHandler mod_python
+        PythonHandler kojixmlrpc
+
+        PythonOption ConfigFile /etc/koji-hub/hub.conf
+
+        PythonDebug Off
+        # autoreload is mostly useless to us (it would only reload kojixmlrpc.py)
+        PythonAutoReload Off
+</Directory>
+
+# uncomment this to enable authentication via SSL client certificates
+ <Location /kojihub>
+         SSLOptions +StdEnvVars
+ </Location>

@@ -1,0 +1,55 @@
+### THIS FILE IS MANAGED BY PUPPET
+### <%= file.split(File::SEPARATOR)[5..-1].join(File::SEPARATOR) %>
+
+[web]
+SiteName = <%= @sitename %>
+<% if @kojitheme -%>
+KojiTheme = <%= @kojitheme %>
+<% else -%>
+#KojiTheme = mytheme
+<% end -%>
+
+# Key urls
+KojiHubURL = <%= @kojihuburl %>
+KojiFilesURL = <%= @kojifilesurl %>
+
+# Kerberos authentication options
+<% if @webprincipal -%>
+WebPrincipal = <%= @webprincipal %>
+<% else -%>
+# WebPrincipal = koji/web@EXAMPLE.COM
+<% end -%>
+<% if @webkeytab -%>
+WebKeytab = <%= @webkeytab %>
+<% else -%>
+# WebKeytab = /etc/httpd.keytab
+<% end -%>
+<% if @webccache -%>
+WebCCache = <%= @webccache %>
+<% else -%>
+# WebCCache = /var/tmp/kojiweb.ccache
+<% end -%>
+
+# SSL authentication options
+<% if @webcert -%>
+WebCert = <%= @webcert %>
+<% else -%>
+# WebCert = /etc/kojiweb/kojiweb.crt
+<% end -%>
+<% if @clientca -%>
+ClientCA = <%= @clientca %>
+<% else -%>
+# ClientCA = /etc/kojiweb/clientca.crt
+<% end -%>
+<% if @kojihubca -%>
+KojiHubCA = <%= @kojihubca %>
+<% else -%>
+# KojiHubCA = /etc/kojiweb/kojihubca.crt
+<% end -%>
+
+LoginTimeout = <%= @logintimeout %>
+
+# This must be changed and uncommented before deployment
+Secret = <%= @secret %>
+
+LibPath = <%= @libpath %>

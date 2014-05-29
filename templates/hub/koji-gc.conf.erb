@@ -1,0 +1,30 @@
+### THIS FILE IS MANAGED BY PUPPET
+### <%= file.split(File::SEPARATOR)[5..-1].join(File::SEPARATOR) %>
+#
+#test policy file
+#earlier = higher precedence!
+
+[main]
+key_aliases =
+	c431416d    jpackage
+
+unprotected_keys =
+	centos-4
+	centos-5
+
+server = https://<%= @fqdn %>/kojihub
+weburl = http://<%= @fqdn %>/koji
+
+cert = /root/.koji/root.pem
+ca = /root/.koji/koji_ca_cert.crt
+serverca = /root/.koji/koji_ca_cert.crt
+
+[prune]
+policy =
+    #stuff to protect
+    #note that tags with master lock engaged are already protected
+    age < 1 week :: skip
+    age < 6 weeks :: keep
+
+    #default: keep the last 10 builds
+    order > 9 :: untag

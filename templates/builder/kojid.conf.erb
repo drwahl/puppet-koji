@@ -1,0 +1,174 @@
+### THIS FILE IS MANAGED BY PUPPET
+### <%= file.split(File::SEPARATOR)[5..-1].join(File::SEPARATOR) %>
+
+[kojid]
+; The number of seconds to sleep between tasks
+<% if @sleeptime -%>
+sleeptime=<%= @sleeptime %>
+<% else -%>
+; sleeptime=15
+<% end -%>
+
+; The maximum number of jobs that kojid will handle at a time
+<% if @maxjobs -%>
+maxjobs=<%= maxjobs %>
+<% else -%>
+; maxjobs=10
+<% end -%>
+
+; The minimum amount of free space (in MBs) required for each build root
+<% if @minspace -%>
+minspace=<%= @minspace %>
+<% else -%>
+; minspace=8192
+<% end -%>
+
+; The directory root where work data can be found from the koji hub
+<% if @topdir -%>
+topdir=<%= @topdir %>
+<% else -%>
+; topdir=/mnt/koji
+<% end -%>
+
+; The directory root for temporary storage
+<% if @workdir -%>
+workdir=<%= @workdir %>
+<% else -%>
+; workdir=/tmp/koji
+<% end -%>
+
+; The directory root for mock
+<% if @mockdir -%>
+mockdir=<%= @mockdir %>
+<% else -%>
+; mockdir=/var/lib/mock
+<% end -%>
+
+; The user to run as when doing builds
+<% if @mockuser -%>
+mockuser=<%= @mockuser %>
+<% else -%>
+; mockuser=kojibuilder
+<% end -%>
+
+; The vendor to use in rpm headers
+<% if @vendor -%>
+vendor=<%= @vendor %>
+<% else -%>
+; vendor=Koji
+<% end -%>
+
+; The packager to use in rpm headers
+<% if @packager -%>
+packager=<%= @packager %>
+<% else -%>
+; packager=Koji
+<% end -%>
+
+; The distribution to use in rpm headers
+<% if @distribution -%>
+distribution=<%= @distribution %>
+<% else -%>
+; distribution=Koji
+<% end -%>
+
+; The _host string to use in mock
+<% if @mockhost -%>
+mockhost=<%= @mockhost %>
+<% else -%>
+; mockhost=koji-linux-gnu
+<% end -%>
+
+; The URL for the xmlrpc server
+<% if @server -%>
+server=<%= @server %>
+<% else -%>
+; server=http://hub.example.com/kojihub
+<% end -%>
+
+; The URL for the file access
+<% if @topurl -%>
+topurl=<%= @topurl %>
+<% else -%>
+; topurl=http://hub.example.com/kojifiles
+<% end -%>
+
+; A space-separated list of hostname:repository[:use_common] tuples that kojid is authorized to checkout from (no quotes).
+; Wildcards (as supported by fnmatch) are allowed.
+; If use_common is specified and is one of "false", "no", "off", or "0" (without quotes), then kojid will not attempt to checkout
+; a common/ dir when checking out sources from the source control system.  Otherwise, it will attempt to checkout a common/
+; dir, and will raise an exception if it cannot.
+<% if @allowed_scms -%>
+allowed_scms=<%= @allowed_scms %>
+<% else -%>
+; allowed_scms=scm.example.com:/cvs/example git.example.org:/example svn.example.org:/users/*:no
+<% end -%>
+
+; The mail host to use for sending email notifications
+<% if @smtphost -%>
+smtphost=<%= @smtphost %>
+<% else -%>
+; smtphost=example.com
+<% end -%>
+
+; The From address used when sending email notifications
+<% if @from_addr -%>
+from_addr=<%= @from_addr %>
+<% else -%>
+; from_addr=Koji Build System <buildsys@example.com>
+<% end -%>
+
+; the username has to be the same as what you used with add-host
+; in this example follow as below
+<% if @user -%>
+user = <%= @user %>
+<% else -%>
+user = <%= @fqdn %>
+<% end -%>
+
+;configuration for Kerberos authentication
+
+;the format of the principal used by the build hosts
+;%s will be replaced by the FQDN of the host
+<% if @host_principal_format -%>
+host_principal_format = <%= @host_principal_format %>
+<% else -%>
+;host_principal_format = compile/%s@EXAMPLE.COM
+<% end -%>
+
+;location of the keytab
+<% if @keytab -%>
+keytab = <%= @keytab %>
+<% else -%>
+;keytab = /etc/kojid/kojid.keytab
+<% end -%>
+
+;the service name of the principal being used by the hub
+<% if @krbservice -%>
+krbservice = <%= @krbservice %>
+<% else -%>
+;krbservice = host
+<% end -%>
+
+;configuration for SSL authentication
+
+;client certificate
+<% if @cert -%>
+cert = <%= @cert %>
+<% else -%>
+;cert = /etc/kojid/client.crt
+<% end -%>
+
+;certificate of the CA that issued the client certificate
+<% if @ca -%>
+ca = <%= @ca %>
+<% else -%>
+;ca = /etc/kojid/clientca.crt
+<% end -%>
+
+;certificate of the CA that issued the HTTP server certificate
+<% if @serverca -%>
+serverca = <%= @serverca %>
+<% else -%>
+;serverca = /etc/kojid/serverca.crt
+<% end -%>
