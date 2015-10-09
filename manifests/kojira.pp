@@ -21,7 +21,7 @@ class koji::kojira (
     $runas          = 'root'
 ) {
 
-    include koji::hub
+    include ::koji::hub
 
     service { 'kojira':
         ensure  => running,

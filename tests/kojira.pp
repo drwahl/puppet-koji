@@ -1,1 +1,1 @@
-include koji::kojira
+include ::koji::kojira

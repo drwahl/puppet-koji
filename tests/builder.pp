@@ -1,4 +1,4 @@
-class { 'koji::builder':
+class { '::koji::builder':
     topdir    => '/mnt/koji',
     server    => 'http://kojihub.example.com/kojihub',
     topurl    => 'http://kojiweb.example.com/kojifiles/',
@@ -8,4 +8,3 @@ class { 'koji::builder':
     ca        => '/etc/kojid/koji_ca_cert.crt',
     serverca  => '/etc/kojid/koji_ca_cert.crt'
 }
-

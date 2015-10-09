@@ -104,31 +104,31 @@ class koji::hub (
     }
 
     file { "${kojidir}/packages":
-        ensure  => directory,
-        owner   => 'apache',
-        group   => 'apache',
-        mode    => undef,
+        ensure => directory,
+        owner  => 'apache',
+        group  => 'apache',
+        mode   => undef,
     }
 
     file { "${kojidir}/repos":
-        ensure  => directory,
-        owner   => 'apache',
-        group   => 'apache',
-        mode    => undef,
+        ensure => directory,
+        owner  => 'apache',
+        group  => 'apache',
+        mode   => undef,
     }
 
     file { "${kojidir}/work":
-        ensure  => directory,
-        owner   => 'apache',
-        group   => 'apache',
-        mode    => undef,
+        ensure => directory,
+        owner  => 'apache',
+        group  => 'apache',
+        mode   => undef,
     }
 
     file { "${kojidir}/scratch":
-        ensure  => directory,
-        owner   => 'apache',
-        group   => 'apache',
-        mode    => undef,
+        ensure => directory,
+        owner  => 'apache',
+        group  => 'apache',
+        mode   => undef,
     }
 
     exec { 'create_koji_role_user':
