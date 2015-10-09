@@ -1,1 +1,1 @@
-include koji::web
+include ::koji::web
